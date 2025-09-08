@@ -44,10 +44,10 @@ RUN set -ex; \
   gosu nobody true
 
 # Configure Flink version
-#ENV FLINK_TGZ_URL=https://dlcdn.apache.org/flink/flink-1.20.2/flink-1.20.2-bin-scala_2.12.tgz \
-#    FLINK_ASC_URL=https://downloads.apache.org/flink/flink-1.20.2/flink-1.20.2-bin-scala_2.12.tgz.asc \
-#    GPG_KEY=CC33238850B5A92624ED7F6216AE0DDBBB2F380B \
-#    CHECK_GPG=true
+ENV FLINK_TGZ_URL=http://host.docker.internal:9999/data/flink-1.20.2.tgz \
+    FLINK_ASC_URL= \
+    GPG_KEY= \
+    CHECK_GPG=false
 
 # Prepare environment
 ENV FLINK_HOME=/opt/flink
@@ -55,7 +55,6 @@ ENV PATH=$FLINK_HOME/bin:$PATH
 RUN groupadd --system --gid=9999 flink && \
     useradd --system --home-dir $FLINK_HOME --uid=9999 --gid=flink flink
 WORKDIR $FLINK_HOME
-COPY build-target .
 
 # Install Flink
 RUN set -ex; \
